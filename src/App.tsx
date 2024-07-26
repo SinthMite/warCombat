@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <StateProvider>
       <div>
         <Stats />
-        <h1>Combat Sports</h1>
+        <h1>War Combat</h1>
         <Action />
       </div>
     </StateProvider>
