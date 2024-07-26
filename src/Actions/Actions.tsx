@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Fighter, Knight, Rogue, Berserker } from '../WarriorClass/WarriorClass';
 import { useStateContext } from '../State/State';
-
+import berserker from '../assets/berserker.webp';
+import knight from '../assets/knight.webp';
+import rogue from '../assets/rogue.webp';
+import './Action.css'
 const Action: React.FC = () => {
   const { strength, setStrength, speed, setSpeed, agility, setAgility, health, setHealth } = useStateContext();
 
@@ -54,7 +57,7 @@ const Action: React.FC = () => {
           )
         }
       >
-        Knight
+        <img src={knight} alt="knight Card" />
       </button>
       <button
         onClick={() =>
@@ -71,7 +74,7 @@ const Action: React.FC = () => {
           )
         }
       >
-        Rogue
+        <img src={rogue} alt="knight Card" />
       </button>
       <button
         onClick={() =>
@@ -88,7 +91,7 @@ const Action: React.FC = () => {
           )
         }
       >
-        Berserker
+        <img src={berserker} alt="knight Card" />
       </button>
     </div>
   );
