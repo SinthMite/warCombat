@@ -1,5 +1,9 @@
 export class Fighter {
     name: string;
+    initialStrength: number;
+    initialSpeed: number;
+    initialAgility: number;
+    initialHealth: number;
     strength: number;
     speed: number;
     agility: number;
@@ -7,6 +11,10 @@ export class Fighter {
 
     constructor(name: string, strength: number, speed: number, agility: number, health: number) {
         this.name = name;
+        this.initialStrength = strength;
+        this.initialSpeed = speed;
+        this.initialAgility = agility;
+        this.initialHealth = health;
         this.strength = strength;
         this.speed = speed;
         this.agility = agility;
@@ -60,7 +68,6 @@ export class Fighter {
     attack(opponent: Fighter): string {
         const damage = this.calculateAttackDamage();
         opponent.health -= damage;
-        console.log(`${this.name} attacks ${opponent.getName()} and deals ${damage} damage`);
         return `${this.name} attacks ${opponent.getName()} and deals ${damage} damage`;
     }
 
@@ -74,12 +81,12 @@ export class Fighter {
         const hitPercentage = Math.floor(Math.random() * (opponent.agility + opponent.speed / 2));
         
         if (dodgePercentage > hitPercentage) {
-            console.log(`${this.name} dodges the attack`);
             return `${this.name} dodges the attack`;
         } else {
-            const attackMessage = opponent.attack(this);
-            console.log(attackMessage);
-            return attackMessage;
+            // The opponent successfully attacks if the dodge fails
+            const damage = opponent.calculateAttackDamage();
+            this.health -= damage;
+            return `${opponent.getName()} attacks ${this.name} and deals ${damage} damage`;
         }
     }
 
@@ -89,16 +96,20 @@ export class Fighter {
 
         if (opponentAttack > myAttack) {
             this.health -= (opponentAttack - myAttack);
-            console.log(`${this.name} parries but still takes ${opponentAttack - myAttack} damage`);
             return `${this.name} parries but still takes ${opponentAttack - myAttack} damage`;
         } else if (opponentAttack < myAttack) {
             opponent.health -= (myAttack - opponentAttack);
-            console.log(`${this.name} parries and deals ${myAttack - opponentAttack} damage to ${opponent.getName()}`);
             return `${this.name} parries and deals ${myAttack - opponentAttack} damage to ${opponent.getName()}`;
         } else {
-            console.log(`${this.name} and ${opponent.getName()} parry each other's attacks with no damage`);
             return `${this.name} and ${opponent.getName()} parry each other's attacks with no damage`;
         }
+    }
+
+    reset(): void {
+        this.strength = this.initialStrength;
+        this.speed = this.initialSpeed;
+        this.agility = this.initialAgility;
+        this.health = this.initialHealth;
     }
 }
 
@@ -106,10 +117,10 @@ export class Knight extends Fighter {
     swordSkill: number;
     shieldSkill: number;
 
-    constructor(name: string, strength: number, speed: number, agility: number, health: number, swordSkill: number, shieldSkill: number) {
-        super(name, strength, speed, agility, health);
-        this.swordSkill = swordSkill;
-        this.shieldSkill = shieldSkill;
+    constructor() {
+        super('Knight', 50, 50, 50, 750);
+        this.swordSkill = 10;
+        this.shieldSkill = 10;
     }
 
     getSwordSkill(): number {
@@ -133,10 +144,10 @@ export class Rogue extends Fighter {
     stealth: number;
     backstabbing: number;
 
-    constructor(name: string, strength: number, speed: number, agility: number, health: number, stealth: number, backstabbing: number) {
-        super(name, strength, speed, agility, health);
-        this.stealth = stealth;
-        this.backstabbing = backstabbing;
+    constructor() {
+        super('Rogue', 30, 70, 70, 500);
+        this.stealth = 5;
+        this.backstabbing = 5;
     }
 
     getStealth(): number {
@@ -160,10 +171,10 @@ export class Berserker extends Fighter {
     rage: number;
     unyielding: number;
 
-    constructor(name: string, strength: number, speed: number, agility: number, health: number, rage: number, unyielding: number) {
-        super(name, strength, speed, agility, health);
-        this.rage = rage;
-        this.unyielding = unyielding;
+    constructor() {
+        super('Berserker', 70, 30, 30, 1000);
+        this.rage = 2;
+        this.unyielding = 2;
     }
 
     getRage(): number {

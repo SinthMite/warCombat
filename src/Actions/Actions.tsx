@@ -23,24 +23,28 @@ const Action: React.FC = () => {
   const [winner, setWinner] = useState<string | null>(null);
 
   useEffect(() => {
-    setUser(new Fighter(user.getName(), strength, speed, agility, health));
-    setOpponent(getRandomOpponentClass());
-  }, [strength, speed, agility, health]);
+    if (!user) {
+      setUser(new Knight()); // Default class as Knight, you can choose another one
+    }
+    if (!opponent) {
+      setOpponent(getRandomOpponentClass());
+    }
+  }, []);
 
   const getRandomOpponentClass = () => {
     const classes = [
-      new Knight('Knight', 50, 50, 50, 750, 10, 10),
-      new Rogue('Rogue', 30, 70, 70, 500, 5, 5),
-      new Berserker('Berserker', 70, 30, 30, 1000, 2, 2)
+      new Knight(),
+      new Rogue(),
+      new Berserker()
     ];
     return classes[Math.floor(Math.random() * classes.length)];
   };
 
   const checkWinner = () => {
-    if (user.getHealth() <= 0 && opponent) {
+    if (user?.getHealth() <= 0 && opponent) {
       setWinner(opponent.getName());
     } else if (opponent && opponent.getHealth() <= 0) {
-      setWinner(user.getName());
+      setWinner(user?.getName() || 'Player');
     }
   };
 
@@ -52,23 +56,43 @@ const Action: React.FC = () => {
 
   const increaseStrength = () => {
     setStrength(prev => prev + 10);
+    if (user) user.setStrength(user.getStrength() + 10);
   };
 
   const increaseSpeed = () => {
     setSpeed(prev => prev + 10);
+    if (user) user.setSpeed(user.getSpeed() + 10);
   };
 
   const increaseAgility = () => {
     setAgility(prev => prev + 10);
+    if (user) user.setAgility(user.getAgility() + 10);
   };
 
   const increaseHealth = () => {
     setHealth(prev => prev + 10);
+    if (user) user.setHealth(user.getHealth() + 10);
   };
 
-  const [userKnight] = useState(new Knight('Isac', 50, 50, 50, 750, 10, 10));
-  const [userRogue] = useState(new Rogue('Alexander', 30, 70, 70, 500, 5, 5));
-  const [userBerserker] = useState(new Berserker('Rack', 70, 30, 30, 1000, 2, 2));
+  const decreaseStrength = () => {
+    setStrength(prev => prev - 10);
+    if (user) user.setStrength(user.getStrength() - 10);
+  };
+
+  const decreaseSpeed = () => {
+    setSpeed(prev => prev - 10);
+    if (user) user.setSpeed(user.getSpeed() - 10);
+  };
+
+  const decreaseAgility = () => {
+    setAgility(prev => prev - 10);
+    if (user) user.setAgility(user.getAgility() - 10);
+  };
+
+  const decreaseHealth = () => {
+    setHealth(prev => prev - 10);
+    if (user) user.setHealth(user.getHealth() - 10);
+  };
 
   const performOpponentAction = (opponent: Fighter) => {
     const actions = ['attack', 'defense', 'parry', 'dodge'];
@@ -77,17 +101,17 @@ const Action: React.FC = () => {
 
     switch (randomAction) {
       case 'attack':
-        message = opponent.attack(user);
+        message = opponent.attack(user!);
         break;
       case 'defense':
         opponent.defense();
         message = `${opponent.getName()} defends.`;
         break;
       case 'parry':
-        message = opponent.parry(user);
+        message = opponent.parry(user!);
         break;
       case 'dodge':
-        message = opponent.dodge(user);
+        message = opponent.dodge(user!);
         break;
     }
 
@@ -98,7 +122,7 @@ const Action: React.FC = () => {
   const handleAttack = () => {
     if (opponent && !winner) {
       playRandomSound([Attack, Attack1]);
-      const message = user.attack(opponent);
+      const message = user!.attack(opponent);
       setActionMessage(message);
       checkWinner();
       if (!winner) performOpponentAction(opponent);
@@ -108,8 +132,8 @@ const Action: React.FC = () => {
   const handleDefend = () => {
     if (!winner) {
       playRandomSound([Block, Block1, Block2]);
-      user.defense();
-      setActionMessage(`${user.getName()} defends.`);
+      user!.defense();
+      setActionMessage(`${user!.getName()} defends.`);
       checkWinner();
       if (opponent && !winner) performOpponentAction(opponent);
     }
@@ -118,7 +142,7 @@ const Action: React.FC = () => {
   const handleParry = () => {
     if (opponent && !winner) {
       playRandomSound([Parry, Parry1]);
-      const message = user.parry(opponent);
+      const message = user!.parry(opponent);
       setActionMessage(message);
       checkWinner();
       if (!winner) performOpponentAction(opponent);
@@ -127,7 +151,7 @@ const Action: React.FC = () => {
 
   const handleDodge = () => {
     if (opponent && !winner) {
-      const message = user.dodge(opponent);
+      const message = user!.dodge(opponent);
       setActionMessage(message);
       checkWinner();
       if (!winner) performOpponentAction(opponent);
@@ -139,6 +163,14 @@ const Action: React.FC = () => {
     setOpponent(getRandomOpponentClass());
   };
 
+  const resetGame = () => {
+    user?.reset();
+    opponent?.reset();
+    setActionMessage('');
+    setOpponentActionMessage('');
+    setWinner(null);
+  };
+
   return (
     <Fragment>
       <section className='StatIncrease'>
@@ -147,49 +179,31 @@ const Action: React.FC = () => {
         <button onClick={increaseAgility}>Increase 🧗‍♂️</button>
         <button onClick={increaseHealth}>Increase ❤️</button>
       </section>
+      <section className='StatDecrease'>
+        <button onClick={decreaseStrength}>Decrease 💪</button>
+        <button onClick={decreaseSpeed}>Decrease 🏃‍♂️</button>
+        <button onClick={decreaseAgility}>Decrease 🧗‍♂️</button>
+        <button onClick={decreaseHealth}>Decrease ❤️</button>
+      </section>
       <section className='ClassChoice'>
         <h2>Player Class Selection</h2>
         <button
           onClick={() => handleClassSelection(
-            new Knight(
-              'Knight',
-              userKnight.getStrength(),
-              userKnight.getSpeed(),
-              userKnight.getAgility(),
-              userKnight.getHealth(),
-              userKnight.getSwordSkill(),
-              userKnight.getShieldSkill()
-            )
+            new Knight()
           )}
         >
           <img src={knight} alt="Knight Card" />
         </button>
         <button
           onClick={() => handleClassSelection(
-            new Rogue(
-              'Rogue',
-              userRogue.getStrength(),
-              userRogue.getSpeed(),
-              userRogue.getAgility(),
-              userRogue.getHealth(),
-              userRogue.getStealth(),
-              userRogue.getBackstabbing()
-            )
+            new Rogue()
           )}
         >
           <img src={rogue} alt="Rogue Card" />
         </button>
         <button
           onClick={() => handleClassSelection(
-            new Berserker(
-              'Berserker',
-              userBerserker.getStrength(),
-              userBerserker.getSpeed(),
-              userBerserker.getAgility(),
-              userBerserker.getHealth(),
-              userBerserker.getRage(),
-              userBerserker.getUnyielding()
-            )
+            new Berserker()
           )}
         >
           <img src={berserker} alt="Berserker Card" />
@@ -200,11 +214,12 @@ const Action: React.FC = () => {
         <button onClick={handleDefend}>Defend</button>
         <button onClick={handleParry}>Parry</button>
         <button onClick={handleDodge}>Dodge</button>
+        <button onClick={resetGame}>Reset</button>
       </section>
       <section className='whatHappened'>
         <p>{actionMessage}</p>
         <p>{opponentActionMessage}</p>
-        <p>User Health: {user.getHealth()}</p>
+        <p>User Health: {user!.getHealth()}</p>
         {opponent && <p>{opponent.getName()} Health: {opponent.getHealth()}</p>}
         {winner && <p>{winner} wins!</p>}
       </section>
