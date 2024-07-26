@@ -1,5 +1,42 @@
-
-
 button img{
     width: 200px;
+}
+
+.StatIncrease button{
+    background-color: rgb(0, 216, 0);
+    color: white;
+    margin: 1rem;
+}
+
+.StatIncrease button:hover{
+    background-color: rgb(0, 150, 0);
+}
+h2{
+    color: whitesmoke;
+}
+
+.ClassChoice button{
+    background: none;
+}
+
+.ClassChoice button img:hover{
+    width: 250px;
+}
+
+.userActions button{
+    background-color: red;
+    padding: 2rem;
+    margin: 1rem;
+}
+
+.userActions button:hover{
+    background-color: darkred;
+}
+
+.whatHappened{
+    color: #f2f2f2;
+    background-color: #444;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
 }

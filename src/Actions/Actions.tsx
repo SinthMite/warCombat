@@ -141,13 +141,14 @@ const Action: React.FC = () => {
 
   return (
     <Fragment>
-      <section>
+      <section className='StatIncrease'>
         <button onClick={increaseStrength}>Increase 💪</button>
         <button onClick={increaseSpeed}>Increase 🏃‍♂️</button>
         <button onClick={increaseAgility}>Increase 🧗‍♂️</button>
         <button onClick={increaseHealth}>Increase ❤️</button>
       </section>
-      <section>
+      <section className='ClassChoice'>
+        <h2>Player Class Selection</h2>
         <button
           onClick={() => handleClassSelection(
             new Knight(
@@ -194,13 +195,13 @@ const Action: React.FC = () => {
           <img src={berserker} alt="Berserker Card" />
         </button>
       </section>
-      <section>
+      <section className='userActions'>
         <button onClick={handleAttack}>Attack</button>
         <button onClick={handleDefend}>Defend</button>
         <button onClick={handleParry}>Parry</button>
         <button onClick={handleDodge}>Dodge</button>
       </section>
-      <section>
+      <section className='whatHappened'>
         <p>{actionMessage}</p>
         <p>{opponentActionMessage}</p>
         <p>User Health: {user.getHealth()}</p>
