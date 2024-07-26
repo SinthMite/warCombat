@@ -214,6 +214,8 @@ const Action: React.FC = () => {
         <button onClick={handleDefend}>Defend</button>
         <button onClick={handleParry}>Parry</button>
         <button onClick={handleDodge}>Dodge</button>
+      </section>
+      <section className='resetSection'>
         <button onClick={resetGame}>Reset</button>
       </section>
       <section className='whatHappened'>
