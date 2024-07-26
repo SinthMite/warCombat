@@ -1,0 +1,12 @@
+ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(111, 53, 53);
+    margin: 0;
+}
+li{
+    list-style-type: none;
+    margin: 1rem;
+    color: white;
+}
