@@ -4,6 +4,14 @@ import { useStateContext } from '../State/State';
 import berserker from '../assets/berserker.webp';
 import knight from '../assets/knight.webp';
 import rogue from '../assets/rogue.webp';
+import Attack from '../assets/sounds/Attack.mp3';
+import Attack1 from '../assets/sounds/Attack1.mp3';
+import Block from '../assets/sounds/block.mp3';
+import Block1 from '../assets/sounds/block1.mp3';
+import Block2 from '../assets/sounds/block2.mp3';
+import Parry from '../assets/sounds/parry.mp3';
+import Parry1 from '../assets/sounds/parry2.mp3';
+
 import './Action.css';
 
 const Action: React.FC = () => {
@@ -24,6 +32,12 @@ const Action: React.FC = () => {
     } else if (opponent && opponent.getHealth() <= 0) {
       setWinner(user.getName());
     }
+  };
+
+  const playRandomSound = (sounds: string[]) => {
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    const sound = new Audio(randomSound);
+    sound.play();
   };
 
   const increaseStrength = () => {
@@ -73,6 +87,7 @@ const Action: React.FC = () => {
 
   const handleAttack = () => {
     if (opponent && !winner) {
+      playRandomSound([Attack, Attack1]);
       const message = user.attack(opponent);
       setActionMessage(message);
       checkWinner();
@@ -82,6 +97,7 @@ const Action: React.FC = () => {
 
   const handleDefend = () => {
     if (!winner) {
+      playRandomSound([Block, Block1, Block2]);
       user.defense();
       setActionMessage(`${user.getName()} defends.`);
       checkWinner();
@@ -91,6 +107,7 @@ const Action: React.FC = () => {
 
   const handleParry = () => {
     if (opponent && !winner) {
+      playRandomSound([Parry, Parry1]);
       const message = user.parry(opponent);
       setActionMessage(message);
       checkWinner();
