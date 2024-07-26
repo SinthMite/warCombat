@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { useStateContext } from '../State/State';
-import { Fighter, Knight, Rogue, Berserker } from '../WarriorClass/WarriorClass';
 
 import './stats.css'
 export const Stats: React.FC = () =>{
