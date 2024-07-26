@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Fighter, Knight, Rogue, Berserker } from '../WarriorClass/WarriorClass';
 import { useStateContext } from '../State/State';
 import berserker from '../assets/berserker.webp';
@@ -6,14 +6,12 @@ import knight from '../assets/knight.webp';
 import rogue from '../assets/rogue.webp';
 import './Action.css'
 const Action: React.FC = () => {
-  const { strength, setStrength, speed, setSpeed, agility, setAgility, health, setHealth } = useStateContext();
+  const { strength, setStrength, speed, setSpeed, agility, setAgility, health, setHealth, user, setUser } = useStateContext();
 
-  const [user, setUser] = useState(new Fighter('user', strength, speed, agility, health));
 
   useEffect(() => {
     // Update the user stats whenever they change
     setUser(new Fighter(user.getName(), strength, speed, agility, health));
-    console.log(user);
   }, [strength, speed, agility, health]);
 
   const IncreaseStrength = () => {
@@ -37,16 +35,19 @@ const Action: React.FC = () => {
   const [userBerserker] = useState(new Berserker('Rack', 200, 10, 20, 500, 2, 2));
 
   return (
-    <div>
-      <button onClick={IncreaseStrength}>Increase Strength</button>
-      <button onClick={IncreaseSpeed}>Increase Speed</button>
-      <button onClick={IncreaseAgility}>Increase Agility</button>
-      <button onClick={IncreaseHealth}>Increase Health</button>
+    <Fragment>
+        <section>
+      <button onClick={IncreaseStrength}>Increase 💪</button>
+      <button onClick={IncreaseSpeed}>Increase 🏃‍♂️</button>
+      <button onClick={IncreaseAgility}>Increase 🧗‍♂️</button>
+      <button onClick={IncreaseHealth}>Increase ❤️</button>
+      </section>
+      <section>
       <button
         onClick={() =>
           setUser(
             new Knight(
-              'IsacTheKnight',
+              'Knight',
               userKnight.getStrength(),
               userKnight.getSpeed(),
               userKnight.getAgility(),
@@ -63,7 +64,7 @@ const Action: React.FC = () => {
         onClick={() =>
           setUser(
             new Rogue(
-              'AlexanderTheRogue',
+              'Rogue',
               userRogue.getStrength(),
               userRogue.getSpeed(),
               userRogue.getAgility(),
@@ -80,7 +81,7 @@ const Action: React.FC = () => {
         onClick={() =>
           setUser(
             new Berserker(
-              'RackTheBerserker',
+              'Berserker',
               userBerserker.getStrength(),
               userBerserker.getSpeed(),
               userBerserker.getAgility(),
@@ -93,7 +94,8 @@ const Action: React.FC = () => {
       >
         <img src={berserker} alt="knight Card" />
       </button>
-    </div>
+      </section>
+    </Fragment>
   );
 };
 
