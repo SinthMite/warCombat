@@ -4,7 +4,7 @@ import { Fighter, Knight, Rogue, Berserker } from '../WarriorClass/WarriorClass'
 
 import './stats.css'
 export const Stats: React.FC = () =>{
-    const { strength, setStrength, speed, setSpeed, agility, setAgility, health, setHealth, user, setUser } = useStateContext();
+    const {  user } = useStateContext();
     console.log(user)
     return(
     

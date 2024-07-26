@@ -15,7 +15,7 @@ import Parry1 from '../assets/sounds/parry2.mp3';
 import './Action.css';
 
 const Action: React.FC = () => {
-  const { strength, setStrength, speed, setSpeed, agility, setAgility, health, setHealth, user, setUser } = useStateContext();
+  const { setStrength, setSpeed, setAgility, setHealth, user, setUser } = useStateContext();
 
   const [actionMessage, setActionMessage] = useState<string>('');
   const [opponent, setOpponent] = useState<Fighter | null>(null);
