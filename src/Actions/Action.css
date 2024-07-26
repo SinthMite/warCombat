@@ -1,5 +1,5 @@
 button img{
-    width: 200px;
+    width: 20vw;
 }
 
 .StatIncrease button{
@@ -28,7 +28,7 @@ h2{
 }
 
 .ClassChoice button img:hover{
-    width: 250px;
+    width: 23vw;
 }
 
 .userActions button{

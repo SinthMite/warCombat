@@ -173,6 +173,9 @@ const Action: React.FC = () => {
 
   return (
     <Fragment>
+        <div>
+            <h2>Increase/Decrease Stats</h2>
+        </div>
       <section className='StatIncrease'>
         <button onClick={increaseStrength}>Increase 💪</button>
         <button onClick={increaseSpeed}>Increase 🏃‍♂️</button>
