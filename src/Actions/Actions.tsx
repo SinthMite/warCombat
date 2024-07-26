@@ -24,7 +24,17 @@ const Action: React.FC = () => {
 
   useEffect(() => {
     setUser(new Fighter(user.getName(), strength, speed, agility, health));
+    setOpponent(getRandomOpponentClass());
   }, [strength, speed, agility, health]);
+
+  const getRandomOpponentClass = () => {
+    const classes = [
+      new Knight('Knight', 50, 50, 50, 750, 10, 10),
+      new Rogue('Rogue', 30, 70, 70, 500, 5, 5),
+      new Berserker('Berserker', 70, 30, 30, 1000, 2, 2)
+    ];
+    return classes[Math.floor(Math.random() * classes.length)];
+  };
 
   const checkWinner = () => {
     if (user.getHealth() <= 0 && opponent) {
@@ -124,6 +134,11 @@ const Action: React.FC = () => {
     }
   };
 
+  const handleClassSelection = (newClass: Fighter) => {
+    setUser(newClass);
+    setOpponent(getRandomOpponentClass());
+  };
+
   return (
     <Fragment>
       <section>
@@ -134,56 +149,47 @@ const Action: React.FC = () => {
       </section>
       <section>
         <button
-          onClick={() => {
-            setUser(
-              new Knight(
-                'Knight',
-                userKnight.getStrength(),
-                userKnight.getSpeed(),
-                userKnight.getAgility(),
-                userKnight.getHealth(),
-                userKnight.getSwordSkill(),
-                userKnight.getShieldSkill()
-              )
-            );
-            setOpponent(userKnight);
-          }}
+          onClick={() => handleClassSelection(
+            new Knight(
+              'Knight',
+              userKnight.getStrength(),
+              userKnight.getSpeed(),
+              userKnight.getAgility(),
+              userKnight.getHealth(),
+              userKnight.getSwordSkill(),
+              userKnight.getShieldSkill()
+            )
+          )}
         >
           <img src={knight} alt="Knight Card" />
         </button>
         <button
-          onClick={() => {
-            setUser(
-              new Rogue(
-                'Rogue',
-                userRogue.getStrength(),
-                userRogue.getSpeed(),
-                userRogue.getAgility(),
-                userRogue.getHealth(),
-                userRogue.getStealth(),
-                userRogue.getBackstabbing()
-              )
-            );
-            setOpponent(userRogue);
-          }}
+          onClick={() => handleClassSelection(
+            new Rogue(
+              'Rogue',
+              userRogue.getStrength(),
+              userRogue.getSpeed(),
+              userRogue.getAgility(),
+              userRogue.getHealth(),
+              userRogue.getStealth(),
+              userRogue.getBackstabbing()
+            )
+          )}
         >
           <img src={rogue} alt="Rogue Card" />
         </button>
         <button
-          onClick={() => {
-            setUser(
-              new Berserker(
-                'Berserker',
-                userBerserker.getStrength(),
-                userBerserker.getSpeed(),
-                userBerserker.getAgility(),
-                userBerserker.getHealth(),
-                userBerserker.getRage(),
-                userBerserker.getUnyielding()
-              )
-            );
-            setOpponent(userBerserker);
-          }}
+          onClick={() => handleClassSelection(
+            new Berserker(
+              'Berserker',
+              userBerserker.getStrength(),
+              userBerserker.getSpeed(),
+              userBerserker.getAgility(),
+              userBerserker.getHealth(),
+              userBerserker.getRage(),
+              userBerserker.getUnyielding()
+            )
+          )}
         >
           <img src={berserker} alt="Berserker Card" />
         </button>
