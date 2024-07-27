@@ -11,7 +11,7 @@ export const Stats: React.FC = () =>{
             <ul>
                 <li>💪 {user.getStrength()}</li>
                 <li>🏃‍♂️ {user.getSpeed()}</li>
-                <li>{user.name}</li>
+                <li>{user.name.toUpperCase()}</li>
                 <li>🧗‍♂️ {user.getAgility()}</li>
                 <li>❤️ {user.getHealth()}</li>
             </ul>
