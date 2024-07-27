@@ -28,7 +28,7 @@ War Combat Game is a React-based combat simulation game where players can choose
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/war-combat-game.git
+   git clone (https://github.com/SinthMite/warCombat.git)
 Navigate to the project directory:
 
 bash
